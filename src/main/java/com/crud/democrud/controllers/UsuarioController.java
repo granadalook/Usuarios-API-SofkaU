@@ -24,7 +24,10 @@ public class UsuarioController {
     public UsuarioModel guardarUsuario(@RequestBody UsuarioModel usuario) {
         return this.usuarioService.guardarUsuario(usuario);
     }
-
+    @PutMapping(path = "/{id}")
+    public UsuarioModel editarUsuarios(@PathVariable("id") Long id,@RequestBody UsuarioModel usuario){
+        return this.usuarioService.editarUsuario(id,usuario);
+    }
     @GetMapping(path = "/{id}")
     public Optional<UsuarioModel> obtenerUsuarioPorId(@PathVariable("id") Long id) {
         return this.usuarioService.obtenerPorId(id);

@@ -21,6 +21,10 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public UsuarioModel editarUsuario(long id,UsuarioModel usuario){
+        usuario.setId(id);
+        return usuarioRepository.save(usuario);
+    }
     public Optional<UsuarioModel> obtenerPorId(Long id){
         return usuarioRepository.findById(id);
     }
