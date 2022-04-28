@@ -100,10 +100,10 @@ public class UsuarioRolController {
         try {
             response.data = usuarioRolService.deleteUserRol(id);
             if (response.data == null) {
-                response.message = "El contacto no existe";
+                response.message = "NO EXISTE";
                 httpStatus = HttpStatus.NOT_FOUND;
             } else {
-                response.message = "El contacto fue removido exitosamente";
+                response.message = "ELIMINADO";
                 httpStatus = HttpStatus.OK;
             }
         } catch (DataAccessException exception) {
@@ -122,10 +122,10 @@ public class UsuarioRolController {
             var sqlErrorCode = sqlEx.getErrorCode();
             switch (sqlErrorCode) {
                 case 1062:
-                    response.message = "El dato ya está registrado";
+                    response.message = "REGISTRADO";
                     break;
                 case 1452:
-                    response.message = "El usuario indicado no existe";
+                    response.message = "NO EXISTE";
                     break;
                 default:
                     response.message = exception.getMessage();
