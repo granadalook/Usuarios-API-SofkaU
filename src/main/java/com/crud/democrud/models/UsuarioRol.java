@@ -1,51 +1,60 @@
 package com.crud.democrud.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "usuarioRol")
+@Table(name = "usuario_rol")
 public class UsuarioRol {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
+    private Long id;
 
-    private long id;
-    private long idRol;
     private String rol;
 
-    public void setId(long id) {
-        this.id = id;
+    @ManyToOne(
+            targetEntity = UsuarioModel.class,
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    @JoinColumn(name = "id_usu")
+    @JsonBackReference
+    private UsuarioModel usuarioModel;
+
+    public UsuarioRol() {
     }
 
-    public void setIdRol(long idRol) {
-        this.idRol = idRol;
-    }
-
-    public void setRol(String rol) {
+    public UsuarioRol(String rol, UsuarioModel usuarioModel) {
         this.rol = rol;
+        this.usuarioModel = usuarioModel;
     }
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public long getIdRol() {
-        return idRol;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public UsuarioModel getUsuarioModel() {
+        return usuarioModel;
+    }
+
+    public void setUsuarioModel(UsuarioModel usuarioModel) {
+        this.usuarioModel = usuarioModel;
     }
 
     public String getRol() {
         return rol;
     }
 
-    public UsuarioRol(long id, long idRol, String rol) {
-        this.id = id;
-        this.idRol = idRol;
+    public void setRol(String rol) {
         this.rol = rol;
     }
-
-    public UsuarioRol() {
-    }
-
 }

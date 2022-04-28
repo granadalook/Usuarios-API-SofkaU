@@ -4,36 +4,56 @@ import com.crud.democrud.models.UsuarioRol;
 import com.crud.democrud.repositories.UsuarioRolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class UsuarioRolService {
+
     @Autowired
     UsuarioRolRepository usuarioRolRepository;
 
-    /*public ArrayList<UsusarioRol> obtenerRoles(){
-        return (ArrayList<UsusarioRol>) usuarioRolRepository.findAll();
-    }*/
-    public ArrayList<UsuarioRol> obtenerRoles() {
-        return (ArrayList<UsuarioRol>) usuarioRolRepository.findAll();
+
+    @Transactional(readOnly = true)
+    public List<UsuarioRol> getUserRols() {
+        return (List<UsuarioRol>) usuarioRolRepository.findAll();
     }
 
-    public UsuarioRol guardarUsuarioRol(UsuarioRol usuario) {
-        return usuarioRolRepository.save(usuario);
+
+    @Transactional
+    public UsuarioRol saveUserRol(UsuarioRol usuarioRol) {
+        return usuarioRolRepository.save(usuarioRol);
     }
 
-    public UsuarioRol editarUsuario(long id, UsuarioRol usuario) {
-        usuario.setId(id);
-        return usuarioRolRepository.save(usuario);
+
+    @Transactional(readOnly = true)
+    public Optional<UsuarioRol> findByRol(String rol) {
+        return usuarioRolRepository.findByRol(rol);
     }
 
-    public boolean eliminarUsuario(Long id) {
+
+    @Transactional(readOnly = true)
+    public Optional<UsuarioRol> findById(Long id) {
+        return usuarioRolRepository.findById(id);
+    }
+
+
+    @Transactional
+    public UsuarioRol updateUserRol(Long id, UsuarioRol usuarioRol) {
+        usuarioRol.setId(id);
+        return usuarioRolRepository.save(usuarioRol);
+    }
+
+
+    @Transactional
+    public Boolean deleteUserRol(Long id) {
         try {
             usuarioRolRepository.deleteById(id);
             return true;
-        } catch (Exception err) {
+        } catch (Exception e) {
             return false;
         }
     }
